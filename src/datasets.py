@@ -4,7 +4,8 @@ import numpy as np
 import scipy.ndimage
 import PIL.Image
 import torch, torchvision
-
+# Increase the maximum image pixel limit
+Image.MAX_IMAGE_PIXELS = None
 
 class Dataset:
     def __init__(
