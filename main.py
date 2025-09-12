@@ -130,7 +130,8 @@ def inference(args):
     model                 = util.load_model(model_destination_tmp)
     if torch.cuda.is_available():
         model.cuda()
-
+    device = torch.device('cpu')
+    model.to(device)
     modelbasename = args.model.split('/')[-2]
     outputdir     = os.path.join(args.output, f'{modelbasename}_{args.suffix}' )
     os.makedirs(outputdir, exist_ok=True)
@@ -150,7 +151,7 @@ def inference(args):
             pith_pixel_position = (cy,cx)
 
         try:
-
+            cy, cx = None, None
             output  = model.process_image(f, upscale_result=upscale, pith_pixel_position=pith_pixel_position)
         except Exception as e:
             print(f'Could not process image {os.path.basename(f)}: {e}')
@@ -168,6 +169,8 @@ def inference(args):
             open(outf+'.areas.csv', 'w').write(util.labelmap_to_areas_output(labelmap))
 
             #to LabelMe format
+            if cx is None or cy is None:
+                continue #need pith position
             from src.util import labelmap_to_contours, write_json, polygon_2_labelme_json
 
             contours = labelmap_to_contours(labelmap, cy=cy,cx=cx)
