@@ -45,12 +45,12 @@ for X in 1 2 3 4 5; do
     # Run inference
     cd /clusteruy/home/henry.marichal/repos/INBD && python main.py inference \
            ${MODEL_PATH} \
-            /clusteruy/home/henry.marichal/datasets/candice_reviewers1/salix_1_downsampling_x5/test_images_${X}.txt \
+            /clusteruy/home/henry.marichal/datasets/candice_reviewers1/salix_1/test_images_${X}.txt \
             --output ${INFERENCE_DIR}
     
     # Run evaluation
     cd /clusteruy/home/henry.marichal/repos/INBD && python main.py evaluate ${INFERENCE_DIR} \
-            /clusteruy/home/henry.marichal/datasets/candice_reviewers1/salix_1_downsampling_x5/test_annotations_${X}.txt
+            /clusteruy/home/henry.marichal/datasets/candice_reviewers1/salix_1/test_annotations_${X}.txt
     
     echo "Completed model_${X}"
 done
