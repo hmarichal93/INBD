@@ -40,17 +40,24 @@ for X in 1 2 3 4 5; do
     echo "Using model: ${MODEL_PATH}"
     
     # Define output directory for this model
-    INFERENCE_DIR="inference/salix_1_downsampling_x5/model_${X}"
-    
+    INFERENCE_PARENT_DIR="inference/salix_1_downsampling_x5/model_${X}"
+
     # Run inference
-    cd /clusteruy/home/henry.marichal/repos/INBD && python main.py inference \
-           ${MODEL_PATH} \
-            /clusteruy/home/henry.marichal/datasets/candice_reviewers1/salix_1/test_images_${X}.txt \
-            --output ${INFERENCE_DIR}
-    
+    # cd /clusteruy/home/henry.marichal/repos/INBD && python main.py inference \
+    #    ${MODEL_PATH} \
+    #     /clusteruy/home/henry.marichal/datasets/candice_reviewers1/salix_1/test_images_${X}.txt \
+    #     --output ${INFERENCE_PARENT_DIR}
+
+    # Find the latest inference subdirectory (timestamped)
+    LATEST_INFERENCE_DIR=$(ls -td ${INFERENCE_PARENT_DIR}/*/ 2>/dev/null | head -1 | sed 's:/*$::')
+
+    if [ -z "$LATEST_INFERENCE_DIR" ]; then
+    echo "Error: No inference output found in ${INFERENCE_PARENT_DIR}/"
+    continue
+    fi
+
     # Run evaluation
-    cd /clusteruy/home/henry.marichal/repos/INBD && python main.py evaluate ${INFERENCE_DIR} \
-            /clusteruy/home/henry.marichal/datasets/candice_reviewers1/salix_1/test_annotations_${X}.txt
-    
+    cd /clusteruy/home/henry.marichal/repos/INBD && python main.py evaluate ${LATEST_INFERENCE_DIR} \
+        /clusteruy/home/henry.marichal/datasets/candice_reviewers1/salix_1/test_annotations_${X}.txt
+
     echo "Completed model_${X}"
-done
