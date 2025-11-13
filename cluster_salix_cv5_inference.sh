@@ -20,7 +20,8 @@ conda activate inbd_gpu
 
 MODEL_ROOT_DIR=$1
 INFERENCE_PARENT_DIR=$2
-DATASET_DIR=$3
+DATASET_INFERENCE_DIR=$3
+DATASET_EVALUATION_DIR=$4
 # Loop through X=[1,2,3,4,5]
 for X in 1 2 3 4 5; do
     echo "Processing model_${X} with test set ${X}..."
@@ -48,7 +49,7 @@ for X in 1 2 3 4 5; do
     # Run inference
     cd /clusteruy/home/henry.marichal/repos/INBD && python main.py inference \
         ${MODEL_PATH} \
-         ${DATASET_DIR}/test_images_${X}.txt \
+         ${DATASET_INFERENCE_DIR}/test_images_${X}.txt \
          --output ${INFERENCE_PARENT_DIR}
         
     # Find the latest inference subdirectory (timestamped)
@@ -62,7 +63,7 @@ for X in 1 2 3 4 5; do
 
     # Run evaluation
     cd /clusteruy/home/henry.marichal/repos/INBD && python main.py evaluate ${LATEST_INFERENCE_DIR} \
-        ${DATASET_DIR}/test_annotations_${X}.txt
+        ${DATASET_EVALUATION_DIR}/test_annotations_${X}.txt
 
     echo "Completed model_${X}"
 done
