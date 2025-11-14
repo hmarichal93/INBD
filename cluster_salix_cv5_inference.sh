@@ -22,6 +22,7 @@ MODEL_ROOT_DIR=$1
 INFERENCE_PARENT_DIR=$2
 DATASET_INFERENCE_DIR=$3
 DATASET_EVALUATION_DIR=$4
+DOWNSAMPLING=$5
 # Loop through X=[1,2,3,4,5]
 for X in 1 2 3 4 5; do
     echo "Processing model_${X} with test set ${X}..."
@@ -39,7 +40,7 @@ for X in 1 2 3 4 5; do
     if [ ! -f "$MODEL_PATH" ]; then
         echo "Error: Model file not found at ${MODEL_PATH}"
         continue
-    fi
+    fi 
     
     echo "Using model: ${MODEL_PATH}"
     
@@ -50,7 +51,7 @@ for X in 1 2 3 4 5; do
     cd /clusteruy/home/henry.marichal/repos/INBD && python main.py inference \
         ${MODEL_PATH} \
          ${DATASET_INFERENCE_DIR}/test_images_${X}.txt \
-         --output ${INFERENCE_PARENT_DIR}
+         --output ${INFERENCE_PARENT_DIR} --downsample ${DOWNSAMPLING}
         
     # Find the latest inference subdirectory (timestamped)
     LATEST_INFERENCE_DIR=$(ls -td ${INFERENCE_PARENT_DIR}/*/ 2>/dev/null | head -1 | sed 's:/*$::')
