@@ -24,7 +24,8 @@ DATASET_INFERENCE_DIR=$3
 DATASET_EVALUATION_DIR=$4
 DOWNSAMPLING=$5
 # Loop through X=[1,2,3,4,5]
-for X in 1 2 3 4 5; do
+#for X in 1 2 3 4 5; do
+for X in 5; do
     echo "Processing model_${X} with test set ${X}..."
     
     # Find the INBD model directory (latest one if multiple exist)
@@ -50,7 +51,7 @@ for X in 1 2 3 4 5; do
     # Run inference
     cd /clusteruy/home/henry.marichal/repos/INBD && python main.py inference \
         ${MODEL_PATH} \
-         ${DATASET_INFERENCE_DIR}/test_images_${X}.txt \
+         ${DATASET_INFERENCE_DIR}/test_images_pith_${X}.csv \
          --output ${INFERENCE_PARENT_DIR}
         
     # Find the latest inference subdirectory (timestamped)
