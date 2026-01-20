@@ -25,7 +25,7 @@ DATASET_EVALUATION_DIR=$4
 DOWNSAMPLING=$5
 # Loop through X=[1,2,3,4,5]
 #for X in 1 2 3 4 5; do
-for X in 5; do
+for X in 1 2 3 4 5; do
     echo "Processing model_${X} with test set ${X}..."
     
     # Find the INBD model directory (latest one if multiple exist)
