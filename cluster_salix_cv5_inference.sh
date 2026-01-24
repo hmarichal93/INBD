@@ -51,7 +51,7 @@ for X in 1 2 3 4 5; do
     # Run inference
     cd /clusteruy/home/henry.marichal/repos/INBD && python main.py inference \
         ${MODEL_PATH} \
-         ${DATASET_INFERENCE_DIR}/test_images_pith_${X}.csv \
+         ${DATASET_INFERENCE_DIR}/test_images_${X}.txt \
          --output ${INFERENCE_PARENT_DIR}
         
     # Find the latest inference subdirectory (timestamped)
