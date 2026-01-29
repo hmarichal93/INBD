@@ -62,5 +62,4 @@ for X in 1 2 3 4 5; do
         ${DATASET_EVALUATION_DIR}/test_annotations_${X}.txt
 
     echo "Completed model_${X}"
-    exit
 done
