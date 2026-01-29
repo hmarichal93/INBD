@@ -52,20 +52,15 @@ for X in 1 2 3 4 5; do
     cd /clusteruy/home/henry.marichal/repos/INBD && python main.py inference \
         ${MODEL_PATH} \
          ${DATASET_INFERENCE_DIR}/test_images_${X}.txt \
-         --output ${INFERENCE_PARENT_DIR}
+         --output ${INFERENCE_DIR}
         
-    # Find the latest inference subdirectory (timestamped)
-    LATEST_INFERENCE_DIR=$(ls -td ${INFERENCE_PARENT_DIR}/*/ 2>/dev/null | head -1 | sed 's:/*$::')
 
-    if [ -z "$LATEST_INFERENCE_DIR" ]; then
-    echo "Error: No inference output found in ${INFERENCE_PARENT_DIR}/"
-    continue
-    fi
-    echo "Using inference output: ${LATEST_INFERENCE_DIR}"
+    echo "Using inference output: ${INFERENCE_DIR}"
 
     # Run evaluation
-    cd /clusteruy/home/henry.marichal/repos/INBD && python main.py evaluate ${LATEST_INFERENCE_DIR} \
+    cd /clusteruy/home/henry.marichal/repos/INBD && python main.py evaluate ${INFERENCE_DIR} \
         ${DATASET_EVALUATION_DIR}/test_annotations_${X}.txt
 
     echo "Completed model_${X}"
+    exit
 done
