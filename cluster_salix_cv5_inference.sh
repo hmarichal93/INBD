@@ -56,9 +56,9 @@ for X in 1 2 3 4 5; do
         
 
     echo "Using inference output: ${INFERENCE_DIR}"
-
-    # Run evaluation
-    cd /clusteruy/home/henry.marichal/repos/INBD && python main.py evaluate ${INFERENCE_DIR} \
+    PREDICTIONS_DIR=$(find "$INFERENCE_DIR" -mindepth 1 -maxdepth 1 -type d) 
+       # Run evaluation
+    cd /clusteruy/home/henry.marichal/repos/INBD && python main.py evaluate ${PREDICTIONS_DIR} \
         ${DATASET_EVALUATION_DIR}/test_annotations_${X}.txt
 
     echo "Completed model_${X}"
